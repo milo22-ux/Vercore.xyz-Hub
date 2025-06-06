@@ -1,0 +1,55 @@
+local Players = game:GetService("Players")
+local RunService = game:GetService("RunService")
+local Camera = workspace.CurrentCamera
+local LocalPlayer = Players.LocalPlayer
+
+local function getRainbowColor(offset)
+	local hue = (tick() + offset) % 5 / 5
+	return Color3.fromHSV(hue, 1, 1)
+end
+
+local function createNameESP(targetPlayer)
+	local text = Drawing.new("Text")
+	text.Size = 14
+	text.Center = true
+	text.Outline = true
+	text.Transparency = 1
+	text.Font = 2
+
+	RunService.RenderStepped:Connect(function()
+		local char = targetPlayer.Character
+		local hrp = char and char:FindFirstChild("HumanoidRootPart")
+		local myChar = LocalPlayer.Character
+		local myHrp = myChar and myChar:FindFirstChild("HumanoidRootPart")
+
+		if hrp and myHrp then
+			local pos, visible = Camera:WorldToViewportPoint(hrp.Position + Vector3.new(0, 3, 0))
+			if visible then
+				local distance = (myHrp.Position - hrp.Position).Magnitude
+				text.Text = string.format("%s\n%.0f studs", targetPlayer.Name, distance)
+				text.Position = Vector2.new(pos.X, pos.Y)
+				text.Color = getRainbowColor(targetPlayer.UserId)
+				text.Visible = true
+			else
+				text.Visible = false
+			end
+		else
+			text.Visible = false
+		end
+	end)
+end
+
+for _, player in ipairs(Players:GetPlayers()) do
+	if player ~= LocalPlayer then
+		createNameESP(player)
+	end
+end
+
+Players.PlayerAdded:Connect(function(player)
+	if player ~= LocalPlayer then
+		player.CharacterAdded:Connect(function()
+			wait(1)
+			createNameESP(player)
+		end)
+	end
+end)
