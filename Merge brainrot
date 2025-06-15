@@ -1,0 +1,20 @@
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local Remotes = ReplicatedStorage:WaitForChild("Remotes")
+
+for i = 1, 10 do
+	task.wait(1)
+
+	Remotes:WaitForChild("AddValueEvent"):FireServer(999999999999999)
+	Remotes:WaitForChild("GemEvent"):FireServer("Spins", 9999999999)
+	Remotes:WaitForChild("AddRewardEvent"):FireServer("Rainbow", 50)
+	Remotes:WaitForChild("BuyTrailEvent"):FireServer("Rainbow")
+	Remotes:WaitForChild("EquipTrailEvent"):FireServer("Rainbow")
+	Remotes:WaitForChild("UpgradeEvent"):FireServer("CashRateLevel", 41, 589560)
+	Remotes:WaitForChild("UpgradeEvent"):FireServer("LuckyMergeLevel", 41, 3000)
+	Remotes:WaitForChild("UpgradeEvent"):FireServer("AutoMergeLevel", 21, 104857600000000)
+	Remotes:WaitForChild("UpgradeEvent"):FireServer("MaxBlocksLevel", 21, 16200)
+	Remotes:WaitForChild("UpgradeEvent"):FireServer("SpawnRateLevel", 30, 720)
+	Remotes:WaitForChild("UpgradeEvent"):FireServer("SpawnTierLevel", 90, 720)
+	Remotes:WaitForChild("RebirthConfirmEvent"):FireServer(50, 0, 150)
+	Remotes:WaitForChild("AddRewardEvent"):FireServer("Blocks", 100)
+end
